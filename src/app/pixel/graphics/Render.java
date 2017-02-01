@@ -28,6 +28,10 @@ public class Render {
 
 	private static int gameWidth = 0;
 	private static int gameHeight = 0;
+	
+	private static long lastFpsChecked = 0;
+	private static int currentFPS = 0;
+	private static int totalFrames = 0;
 
 	private static void getBestSize() {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -95,6 +99,16 @@ public class Render {
 				GraphicsConfiguration gc = canvas.getGraphicsConfiguration();
 				VolatileImage vImage = gc.createCompatibleVolatileImage(gameWidth, gameHeight);
 				while (true) {
+					totalFrames ++;
+					//FPS counter
+					if(System.nanoTime() > lastFpsChecked + 1000000000) {
+						lastFpsChecked = System.nanoTime();
+						currentFPS = totalFrames;
+						totalFrames = 0;
+					
+					}
+					
+					
 					if (vImage.validate(gc) == VolatileImage.IMAGE_INCOMPATIBLE) {
 						vImage = gc.createCompatibleVolatileImage(gameWidth, gameHeight);
 					}
@@ -102,9 +116,12 @@ public class Render {
 					Graphics g = vImage.getGraphics();
 					g.setColor(Color.black);					
 					g.fillRect(0, 0, gameWidth, gameHeight);
-					g.setColor(Color.red);
-					g.drawRect(10, 10, 100, 100);
+				
 					//RENDER STUFF
+					
+					//Draw FPS counter
+					g.setColor(Color.red);
+					g.drawString(String.valueOf(currentFPS), 2, gameHeight-2);
 					
 					g.dispose();
 					g = canvas.getGraphics();
