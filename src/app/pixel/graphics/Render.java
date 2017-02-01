@@ -1,13 +1,17 @@
 package app.pixel.graphics;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.VolatileImage;
 
 import app.pixel.game.Game;
 
@@ -69,12 +73,10 @@ public class Render {
 		canvas = new Canvas();
 		canvas.setPreferredSize(new Dimension(canvasWidth, canvasHeight));
 		frame.add(canvas);
-		//makeFullScreen();
+		// makeFullScreen();
 		frame.pack();
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
-
-	
 
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -83,5 +85,37 @@ public class Render {
 		});
 		frame.setVisible(true);
 
+		startRendering();
+
+	}
+
+	private static void startRendering() {
+		Thread thread = new Thread() {
+			public void run() {
+				GraphicsConfiguration gc = canvas.getGraphicsConfiguration();
+				VolatileImage vImage = gc.createCompatibleVolatileImage(gameWidth, gameHeight);
+				while (true) {
+					if (vImage.validate(gc) == VolatileImage.IMAGE_INCOMPATIBLE) {
+						vImage = gc.createCompatibleVolatileImage(gameWidth, gameHeight);
+					}
+					
+					Graphics g = vImage.getGraphics();
+					g.setColor(Color.black);					
+					g.fillRect(0, 0, gameWidth, gameHeight);
+					g.setColor(Color.red);
+					g.drawRect(10, 10, 100, 100);
+					//RENDER STUFF
+					
+					g.dispose();
+					g = canvas.getGraphics();
+					g.drawImage(vImage, 0, 0, canvasWidth, canvasHeight, null); 
+				
+				}
+			}
+
+		};
+
+		thread.setName("Rendering thread");
+		thread.start();
 	}
 }
