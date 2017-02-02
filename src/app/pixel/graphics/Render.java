@@ -23,7 +23,7 @@ public class Render {
 	private static int canvasWidth = 0;
 	private static int canvasHeight = 0;
 
-	private static final int GAME_WIDTH = 800;
+	private static final int GAME_WIDTH = 400;
 	private static final int GAME_HEIGHT = 250;
 
 	private static int gameWidth = 0;
@@ -36,12 +36,15 @@ public class Render {
 	private static void getBestSize() {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = toolkit.getScreenSize();
+		
+		System.out.println("screenSize.width="+screenSize.width+", screenSize.width="+screenSize.height);
+		
 		boolean done = false;
 
 		while (!done) {
 			canvasWidth += GAME_WIDTH;
 			canvasHeight += GAME_HEIGHT;
-			if (canvasWidth > screenSize.width || canvasHeight > screenSize.width) {
+			if (canvasWidth > screenSize.width || canvasHeight > screenSize.height) {
 				canvasWidth -= GAME_WIDTH;
 				canvasHeight -= GAME_HEIGHT;
 				done = true;
