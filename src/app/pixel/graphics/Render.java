@@ -9,9 +9,14 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
+import java.awt.Transparency;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.awt.image.VolatileImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import app.pixel.game.Game;
 
@@ -28,7 +33,7 @@ public class Render {
 
 	private static int gameWidth = 0;
 	private static int gameHeight = 0;
-	
+
 	private static long lastFpsChecked = 0;
 	private static int currentFPS = 0;
 	private static int totalFrames = 0;
@@ -36,9 +41,9 @@ public class Render {
 	private static void getBestSize() {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = toolkit.getScreenSize();
-		
-		System.out.println("screenSize.width="+screenSize.width+", screenSize.width="+screenSize.height);
-		
+
+		System.out.println("screenSize.width=" + screenSize.width + ", screenSize.width=" + screenSize.height);
+
 		boolean done = false;
 
 		while (!done) {
@@ -102,34 +107,33 @@ public class Render {
 				GraphicsConfiguration gc = canvas.getGraphicsConfiguration();
 				VolatileImage vImage = gc.createCompatibleVolatileImage(gameWidth, gameHeight);
 				while (true) {
-					totalFrames ++;
-					//FPS counter
-					if(System.nanoTime() > lastFpsChecked + 1000000000) {
+					totalFrames++;
+					// FPS counter
+					if (System.nanoTime() > lastFpsChecked + 1000000000) {
 						lastFpsChecked = System.nanoTime();
 						currentFPS = totalFrames;
 						totalFrames = 0;
-					
+
 					}
-					
-					
+
 					if (vImage.validate(gc) == VolatileImage.IMAGE_INCOMPATIBLE) {
 						vImage = gc.createCompatibleVolatileImage(gameWidth, gameHeight);
 					}
-					
+
 					Graphics g = vImage.getGraphics();
-					g.setColor(Color.black);					
+					g.setColor(Color.black);
 					g.fillRect(0, 0, gameWidth, gameHeight);
-				
-					//RENDER STUFF
-					
-					//Draw FPS counter
+
+					// RENDER STUFF
+
+					// Draw FPS counter
 					g.setColor(Color.red);
-					g.drawString(String.valueOf(currentFPS), 2, gameHeight-2);
-					
+					g.drawString(String.valueOf(currentFPS), 2, gameHeight - 2);
+
 					g.dispose();
 					g = canvas.getGraphics();
-					g.drawImage(vImage, 0, 0, canvasWidth, canvasHeight, null); 
-				
+					g.drawImage(vImage, 0, 0, canvasWidth, canvasHeight, null);
+
 				}
 			}
 
@@ -137,5 +141,13 @@ public class Render {
 
 		thread.setName("Rendering thread");
 		thread.start();
+	}
+
+	public static BufferedImage loadImage(String path) throws IOException {
+
+		BufferedImage rawImage = ImageIO.read(Render.class.getResource(path));
+		BufferedImage finalImage = canvas.getGraphicsConfiguration().createCompatibleImage(rawImage.getWidth(),
+				rawImage.getHeight(), rawImage.getTransparency());
+		return finalImage;
 	}
 }
