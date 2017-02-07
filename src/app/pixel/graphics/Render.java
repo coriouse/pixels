@@ -19,6 +19,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import app.pixel.game.Game;
+import app.pixel.world.World;
 
 public class Render {
 
@@ -125,6 +126,8 @@ public class Render {
 					g.fillRect(0, 0, gameWidth, gameHeight);
 
 					// RENDER STUFF
+					World.update();
+					World.render(g);
 
 					// Draw FPS counter
 					g.setColor(Color.red);
@@ -148,6 +151,9 @@ public class Render {
 		BufferedImage rawImage = ImageIO.read(Render.class.getResource(path));
 		BufferedImage finalImage = canvas.getGraphicsConfiguration().createCompatibleImage(rawImage.getWidth(),
 				rawImage.getHeight(), rawImage.getTransparency());
+
+		finalImage.getGraphics().drawImage(rawImage, 0, 0, rawImage.getWidth(), rawImage.getHeight(), null);
+
 		return finalImage;
 	}
 }
