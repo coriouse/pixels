@@ -19,6 +19,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import app.pixel.game.Game;
+import app.pixel.input.Input;
 import app.pixel.world.World;
 
 public class Render {
@@ -97,6 +98,8 @@ public class Render {
 			}
 		});
 		frame.setVisible(true);
+		
+		canvas.addKeyListener(new Input());
 
 		startRendering();
 
