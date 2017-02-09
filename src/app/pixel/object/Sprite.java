@@ -7,6 +7,11 @@ public class Sprite {
 
 	public float posX = 0;
 	public float posY = 0;
+	
+	public float width = 0;
+	public float height = 0;
+	
+	public boolean isSolid = false;
 
 	public BufferedImage image = null;
 
