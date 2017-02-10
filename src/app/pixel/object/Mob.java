@@ -6,7 +6,7 @@ public class Mob extends Sprite {
 
 	public Mob(float posX, float posY) {
 		super(posX, posY);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 }
