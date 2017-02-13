@@ -150,13 +150,10 @@ public class Render {
 	}
 
 	public static BufferedImage loadImage(String path) throws IOException {
-
 		BufferedImage rawImage = ImageIO.read(Render.class.getResource(path));
 		BufferedImage finalImage = canvas.getGraphicsConfiguration().createCompatibleImage(rawImage.getWidth(),
 				rawImage.getHeight(), rawImage.getTransparency());
-
 		finalImage.getGraphics().drawImage(rawImage, 0, 0, rawImage.getWidth(), rawImage.getHeight(), null);
-
 		return finalImage;
 	}
 }

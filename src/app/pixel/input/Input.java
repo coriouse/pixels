@@ -16,10 +16,12 @@ public class Input implements KeyListener {
 	}
 
 	public void keyPressed(KeyEvent e) {
+	//	System.out.println(e.getKeyCode());
 		currentKeys[e.getKeyCode()] = true;
 	}
 
 	public void keyReleased(KeyEvent e) {
+	//	System.out.println(e.getKeyCode());
 		currentKeys[e.getKeyCode()] = false;
 	}
 }

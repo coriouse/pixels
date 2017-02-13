@@ -24,9 +24,9 @@ public class TestSprite extends Sprite {
 
 	public void update(float deltaTime) {
 
-//		System.out.println(KeyEvent.VK_W+", "+KeyEvent.VK_S+" "+KeyEvent.VK_A+", "+KeyEvent.VK_D);
+
 		if (Input.getKey(KeyEvent.VK_W)) {
-			posY -= 80 * deltaTime;
+			posY -= 80 * deltaTime;			
 		}
 		
 		if (Input.getKey(KeyEvent.VK_S)) {
