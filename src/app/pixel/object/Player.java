@@ -35,40 +35,50 @@ public class Player extends Mob {
 		}
 
 		velocityY += gravity * deltaTime;
-
-		if (Input.getKey(KeyEvent.VK_UP)) {
-			velocityY = (float) -Math.sqrt(2 * jumpHeight * gravity);
+		if(doesCollide(posX, posY+1)) {
+			if (Input.getKey(KeyEvent.VK_UP)) {
+				velocityY = (float) -Math.sqrt(2 * jumpHeight * gravity);
+			}
 		}
 		// Do Collisions
-
-		for (Sprite sprite : World.currentWorld.spites) {
-			if (sprite == this) {
-				continue;
-			}
-
-			Rectangle myRect = new Rectangle((int) (posX + moveX * deltaTime - width / 2), (int) (posY - height / 2),
-					(int) width, (int) height);
-
-			Rectangle otherRect = new Rectangle((int) (sprite.posX - sprite.width / 2),
-					(int) (sprite.posY - sprite.height / 2), (int) sprite.width, (int) sprite.height);
-			if (myRect.intersects(otherRect)) {
-				moveX -= moveX;
-
-			}
-
-			myRect = new Rectangle((int) (posX - width / 2), (int) (posY + velocityY * deltaTime - height / 2),
-					(int) width, (int) height);
-
-			if (myRect.intersects(otherRect)) {
-				velocityY -= velocityY;
-
-			}
-
+		if (doesCollide(posX + moveX * deltaTime, posY)) {
+			moveX -= moveX;
 		}
+
+		if (doesCollide(posX, posY + velocityY * deltaTime)) {
+			velocityY -= velocityY;
+		}
+
 		// END COLLISIONS
 
 		posX += moveX * deltaTime;
 		posY += velocityY * deltaTime;
+	}
+
+	private boolean doesCollide(float x, float y) {
+
+		float myLeft = x - width / 2;
+		float myRight = x + width / 2;
+		float myUp = y - height / 2;
+		float myDown = y + height / 2;
+
+		for (Sprite sprite : World.currentWorld.spites) {
+
+			if (sprite == this) {
+				continue;
+			}
+			float otherLeft = sprite.posX - sprite.width / 2;
+			float otherRight = sprite.posX + sprite.width / 2;
+			float otherUp = sprite.posY - sprite.height / 2;
+			float otherDown = sprite.posY + sprite.height / 2;
+
+			if (myLeft < otherRight && myRight > otherLeft && myDown > otherUp && myUp < otherDown) {
+				return true;
+			}
+		}
+
+		return false;
+
 	}
 
 	public void render(Graphics g) {
