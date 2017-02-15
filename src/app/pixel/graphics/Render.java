@@ -40,6 +40,9 @@ public class Render {
 	private static int currentFPS = 0;
 	private static int totalFrames = 0;
 
+	private static int targetFPS = 60;
+	private static int targetTime = 1000000000 / targetFPS;
+
 	private static void getBestSize() {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = toolkit.getScreenSize();
@@ -98,7 +101,7 @@ public class Render {
 			}
 		});
 		frame.setVisible(true);
-		
+
 		canvas.addKeyListener(new Input());
 
 		startRendering();
@@ -111,6 +114,8 @@ public class Render {
 				GraphicsConfiguration gc = canvas.getGraphicsConfiguration();
 				VolatileImage vImage = gc.createCompatibleVolatileImage(gameWidth, gameHeight);
 				while (true) {
+					long startTime = System.nanoTime();
+
 					totalFrames++;
 					// FPS counter
 					if (System.nanoTime() > lastFpsChecked + 1000000000) {
@@ -127,12 +132,12 @@ public class Render {
 					Graphics g = vImage.getGraphics();
 					g.setColor(Color.black);
 					g.fillRect(0, 0, gameWidth, gameHeight);
-					
-					//UPDATE STUFF
+
+					// UPDATE STUFF
 					World.update();
 					Input.finishInput();
 
-					// RENDER STUFF					
+					// RENDER STUFF
 					World.render(g);
 
 					// Draw FPS counter
@@ -142,6 +147,18 @@ public class Render {
 					g.dispose();
 					g = canvas.getGraphics();
 					g.drawImage(vImage, 0, 0, canvasWidth, canvasHeight, null);
+					g.dispose();
+
+					long totalTime = System.nanoTime() - startTime;
+
+					if (totalTime < targetTime) {
+						try {
+							Thread.sleep((targetTime - totalTime) / 1000000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 
 				}
 			}
