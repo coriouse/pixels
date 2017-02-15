@@ -36,7 +36,7 @@ public class Player extends Mob {
 
 		velocityY += gravity * deltaTime;
 		if(doesCollide(posX, posY+1)) {
-			if (Input.getKey(KeyEvent.VK_UP)) {
+			if (Input.getKeyDown(KeyEvent.VK_UP)) {
 				velocityY = (float) -Math.sqrt(2 * jumpHeight * gravity);
 			}
 		}

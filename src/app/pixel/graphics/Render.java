@@ -127,9 +127,12 @@ public class Render {
 					Graphics g = vImage.getGraphics();
 					g.setColor(Color.black);
 					g.fillRect(0, 0, gameWidth, gameHeight);
-
-					// RENDER STUFF
+					
+					//UPDATE STUFF
 					World.update();
+					Input.finishInput();
+
+					// RENDER STUFF					
 					World.render(g);
 
 					// Draw FPS counter
