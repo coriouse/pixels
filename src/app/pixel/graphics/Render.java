@@ -33,8 +33,8 @@ public class Render {
 	private static final int GAME_WIDTH = 400;
 	private static final int GAME_HEIGHT = 250;
 
-	private static int gameWidth = 0;
-	private static int gameHeight = 0;
+	public static int gameWidth = 0;
+	public static int gameHeight = 0;
 
 	private static long lastFpsChecked = 0;
 	private static int currentFPS = 0;
@@ -42,6 +42,9 @@ public class Render {
 
 	private static int targetFPS = 60;
 	private static int targetTime = 1000000000 / targetFPS;
+	
+	public static float camX = 0;
+	public static float camY = 0;
 
 	private static void getBestSize() {
 		Toolkit toolkit = Toolkit.getDefaultToolkit();

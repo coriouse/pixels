@@ -3,9 +3,11 @@ package app.pixel.object;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.io.IOException;
 
 import com.sun.glass.events.KeyEvent;
 
+import app.pixel.graphics.Render;
 import app.pixel.input.Input;
 import app.pixel.world.World;
 
@@ -18,9 +20,17 @@ public class Player extends Mob {
 	public Player(float posX, float posY) {
 		super(posX, posY);
 
-		width = 10;
-		height = 10;
+		width = 63;
+		height = 66;
 		runSpeed = 100;
+
+		try {
+			image = Render.loadImage("/resources/images/player.png");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	public void update(float deltaTime) {
@@ -35,7 +45,7 @@ public class Player extends Mob {
 		}
 
 		velocityY += gravity * deltaTime;
-		if(doesCollide(posX, posY+1)) {
+		if (doesCollide(posX, posY + 1)) {
 			if (Input.getKeyDown(KeyEvent.VK_UP)) {
 				velocityY = (float) -Math.sqrt(2 * jumpHeight * gravity);
 			}
@@ -53,6 +63,10 @@ public class Player extends Mob {
 
 		posX += moveX * deltaTime;
 		posY += velocityY * deltaTime;
+
+		Render.camX = posX;
+		Render.camY = posY;
+
 	}
 
 	private boolean doesCollide(float x, float y) {
@@ -80,9 +94,10 @@ public class Player extends Mob {
 		return false;
 
 	}
-
-	public void render(Graphics g) {
-		g.setColor(Color.blue);
-		g.drawRect((int) (posX - width / 2), (int) (posY - height / 2), (int) width, (int) height);
-	}
+	// for pixel object, for image uses Sprite.render()
+	/*
+	 * public void render(Graphics g) { g.setColor(Color.blue); g.drawRect((int)
+	 * (posX - width / 2), (int) (posY - height / 2), (int) width, (int)
+	 * height); }
+	 */
 }
