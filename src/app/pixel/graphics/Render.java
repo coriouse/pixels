@@ -93,7 +93,7 @@ public class Render {
 		canvas = new Canvas();
 		canvas.setPreferredSize(new Dimension(canvasWidth, canvasHeight));
 		frame.add(canvas);
-		// makeFullScreen();
+		 makeFullScreen();
 		frame.pack();
 		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);

@@ -65,7 +65,7 @@ public class Player extends Mob {
 		posY += velocityY * deltaTime;
 
 		Render.camX = posX;
-		Render.camY = posY;
+		Render.camY = 100;
 
 	}
 
