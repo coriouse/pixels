@@ -30,7 +30,7 @@ public class World {
 	}
 
 	public static void render(Graphics g) {
-		if (backdrop != null) {
+		/*if (backdrop != null) {
 			if (backdropX < Render.camX / 3 - Render.gameWidth) {
 				backdropX += Render.gameHeight;
 			}
@@ -53,10 +53,9 @@ public class World {
 			try {
 				backdrop = Render.loadImage("/resources/images/backdrop.png");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		}*/
 
 		for (Sprite sprite : currentWorld.spites) {
 			sprite.render(g);

@@ -58,9 +58,15 @@ public class Player extends Mob {
 		if (doesCollide(posX, posY + velocityY * deltaTime)) {
 			velocityY -= velocityY;
 		}
-
 		// END COLLISIONS
 
+		
+		//Bullet
+		if(Input.getKeyDown(KeyEvent.VK_S)) {
+			Bullet bullet = new Bullet(posX, posY, 0);
+		}
+		
+		
 		posX += moveX * deltaTime;
 		posY += velocityY * deltaTime;
 

@@ -13,7 +13,7 @@ public class Game {
 
 		World.currentWorld = new World();
 		World.currentWorld.spites.add(new Player(100, 100));
-		World.currentWorld.spites.add(new Platform(200, 200));
+		World.currentWorld.spites.add(new Platform(200, 200, 300, 20));
 		//World.currentWorld.spites.add(new TestSprite(100, 100));
 
 	}
