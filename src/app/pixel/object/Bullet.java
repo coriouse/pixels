@@ -16,8 +16,6 @@ public class Bullet extends Sprite {
 		this.direction = direction;
 	    width = 10;
 	    height = 10;
-		
-	
 	}
 
 	public void update(float deltaTime) {

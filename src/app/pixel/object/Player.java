@@ -64,6 +64,7 @@ public class Player extends Mob {
 		//Bullet
 		if(Input.getKeyDown(KeyEvent.VK_S)) {
 			Bullet bullet = new Bullet(posX, posY, 0);
+			World.currentWorld.addSprite(bullet);
 		}
 		
 		
