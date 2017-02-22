@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import com.sun.glass.events.KeyEvent;
 
+import app.pixel.graphics.Animation;
 import app.pixel.graphics.Render;
 import app.pixel.input.Input;
 import app.pixel.world.World;
@@ -24,12 +25,14 @@ public class Player extends Mob {
 		height = 66;
 		runSpeed = 100;
 
+		Animation anim = new Animation();
 		try {
-			image = Render.loadImage("/resources/images/player.png");
+			anim.images.add(Render.loadImage("/resources/images/player.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		animations = new Animation[] { anim };
 
 	}
 
@@ -60,14 +63,12 @@ public class Player extends Mob {
 		}
 		// END COLLISIONS
 
-		
-		//Bullet
-		if(Input.getKeyDown(KeyEvent.VK_S)) {
+		// Bullet
+		if (Input.getKeyDown(KeyEvent.VK_S)) {
 			Bullet bullet = new Bullet(posX, posY, 0);
 			World.currentWorld.addSprite(bullet);
 		}
-		
-		
+
 		posX += moveX * deltaTime;
 		posY += velocityY * deltaTime;
 
@@ -85,7 +86,7 @@ public class Player extends Mob {
 
 		for (Sprite sprite : World.currentWorld.spites) {
 
-			if (sprite == this) {
+			if (sprite == this || !sprite.isSolid) {
 				continue;
 			}
 			float otherLeft = sprite.posX - sprite.width / 2;

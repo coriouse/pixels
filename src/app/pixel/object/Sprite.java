@@ -3,6 +3,7 @@ package app.pixel.object;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import app.pixel.graphics.Animation;
 import app.pixel.graphics.Render;
 
 public class Sprite {
@@ -13,9 +14,10 @@ public class Sprite {
 	public float width = 0;
 	public float height = 0;
 
-	public boolean isSolid = false;
+	public boolean isSolid = true;
 
-	public BufferedImage image = null;
+	public Animation[] animations;
+	public int currentAnimation = 0;
 
 	public Sprite(float posX, float posY) {
 		this.posX = posX;
@@ -27,6 +29,13 @@ public class Sprite {
 	}
 
 	public void render(Graphics g) {
+		if (animations == null || currentAnimation >= animations.length) {
+			return;
+		}
+		animations[currentAnimation].playAnimation();
+
+		BufferedImage image = animations[currentAnimation].getImage();
+
 		if (image == null) {
 			return;
 		}
