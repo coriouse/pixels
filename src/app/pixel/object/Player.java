@@ -77,31 +77,7 @@ public class Player extends Mob {
 
 	}
 
-	private boolean doesCollide(float x, float y) {
 
-		float myLeft = x - width / 2;
-		float myRight = x + width / 2;
-		float myUp = y - height / 2;
-		float myDown = y + height / 2;
-
-		for (Sprite sprite : World.currentWorld.spites) {
-
-			if (sprite == this || !sprite.isSolid) {
-				continue;
-			}
-			float otherLeft = sprite.posX - sprite.width / 2;
-			float otherRight = sprite.posX + sprite.width / 2;
-			float otherUp = sprite.posY - sprite.height / 2;
-			float otherDown = sprite.posY + sprite.height / 2;
-
-			if (myLeft < otherRight && myRight > otherLeft && myDown > otherUp && myUp < otherDown) {
-				return true;
-			}
-		}
-
-		return false;
-
-	}
 	// for pixel object, for image uses Sprite.render()
 	/*
 	 * public void render(Graphics g) { g.setColor(Color.blue); g.drawRect((int)

@@ -1,6 +1,7 @@
 package app.pixel.game;
 
 import app.pixel.graphics.Render;
+import app.pixel.object.BadGuy;
 import app.pixel.object.Platform;
 import app.pixel.object.Player;
 import app.pixel.test.TestSprite;
@@ -14,7 +15,10 @@ public class Game {
 		World.currentWorld = new World();
 		World.currentWorld.addSprite(new Player(100, 100));
 		World.currentWorld.addSprite(new Platform(200, 200, 300, 20));
+		World.currentWorld.addSprite(new BadGuy(200, 100));
+		
 		//World.currentWorld.spites.add(new TestSprite(100, 100));
+		
 
 	}
 
