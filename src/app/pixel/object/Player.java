@@ -18,6 +18,8 @@ public class Player extends Mob {
 	private float gravity = 300f;
 	private float jumpHeight = 50;
 
+	private int direction = 1;
+
 	public Player(float posX, float posY) {
 		super(posX, posY);
 
@@ -47,6 +49,14 @@ public class Player extends Mob {
 			moveX += runSpeed;
 		}
 
+		if (moveX > 0) {
+			direction = 1;
+		}
+
+		if (moveX < 0) {
+			direction = -1;
+		}
+
 		velocityY += gravity * deltaTime;
 		if (doesCollide(posX, posY + 1)) {
 			if (Input.getKeyDown(KeyEvent.VK_UP)) {
@@ -65,7 +75,7 @@ public class Player extends Mob {
 
 		// Bullet
 		if (Input.getKeyDown(KeyEvent.VK_S)) {
-			Bullet bullet = new Bullet(posX, posY, 0);
+			Bullet bullet = new Bullet(posX, posY, direction);
 			World.currentWorld.addSprite(bullet);
 		}
 
@@ -76,7 +86,6 @@ public class Player extends Mob {
 		Render.camY = 100;
 
 	}
-
 
 	// for pixel object, for image uses Sprite.render()
 	/*

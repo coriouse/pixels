@@ -16,8 +16,8 @@ public class BadGuy extends Mob {
 	public BadGuy(float posX, float posY) {
 		super(posX, posY);
 
-		width = 10;
-		height = 15;
+		width = 15;
+		height = 50;
 		
 	}
 

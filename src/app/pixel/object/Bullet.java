@@ -1,7 +1,5 @@
 package app.pixel.object;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.io.IOException;
 
 import app.pixel.graphics.Animation;
@@ -9,7 +7,7 @@ import app.pixel.graphics.Render;
 
 public class Bullet extends Sprite {
 
-	public int direction = 0;// 0 = left, 1 = right
+	public int direction = 1;// -1  = left, 1 = right
 
 	public float speed = 400.0f;
 
@@ -21,7 +19,7 @@ public class Bullet extends Sprite {
 		width = 10;
 		height = 10;
 		isSolid = false;
-		
+
 		Animation anim = new Animation();
 
 		try {
@@ -32,23 +30,37 @@ public class Bullet extends Sprite {
 			e.printStackTrace();
 		}
 		
-		animations = new Animation[] {
-				anim
-		};
+		Animation anim2 = new Animation();
+
+		try {
+			anim2.images.add(Render.loadImage("/resources/images/bullet_0_left.png"));
+			anim2.images.add(Render.loadImage("/resources/images/bullet_1_right.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		animations = new Animation[] { anim, anim2 };
 
 	}
 
 	public void update(float deltaTime) {
 		float moveX = 0;
-		if (direction == 0) {
-			moveX -= speed;
-		} else {
-			moveX += speed;
-		}
+
+		moveX += speed * direction;
 
 		posX += moveX * deltaTime;
+		
+		
+		//direction
+		if(direction > 0) {
+			currentAnimation = 0;
+		}
+		
+		if(direction < 0) {
+			currentAnimation = 1;
+		}
 
 	}
-	
 
 }
