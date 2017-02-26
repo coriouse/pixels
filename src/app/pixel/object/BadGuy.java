@@ -4,12 +4,15 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 import app.pixel.graphics.Render;
+import app.pixel.world.World;
 
 public class BadGuy extends Mob {
 
 	private float velocityY = 0;
 	private float gravity = 300f;
 	private float jumpHeight = 50;
+
+	private float damage = 10f;
 
 	private int direction = 1; // 1 - left, -1 - right
 
@@ -18,7 +21,7 @@ public class BadGuy extends Mob {
 
 		width = 15;
 		height = 50;
-		
+
 	}
 
 	public void update(float deltaTime) {
@@ -41,10 +44,10 @@ public class BadGuy extends Mob {
 			velocityY -= velocityY;
 		}
 		// END COLLISIONS
-		
-		//edge check
-		
-		if(!doesCollide(posX + width * direction, posY + 1)) {
+
+		// edge check
+
+		if (!doesCollide(posX + width * direction, posY + 1)) {
 			direction = -direction;
 		}
 
@@ -59,10 +62,14 @@ public class BadGuy extends Mob {
 
 		realX = realX - (int) Render.camX + Render.gameWidth / 2;
 		realY = realY - (int) Render.camY + Render.gameHeight / 2;
-		
+
 		g.setColor(Color.red);
 		g.fillRect(realX, realY, (int) width, (int) height);
 
+	}
+
+	public void takeDamage(float damage) {
+		World.currentWorld.removeSprite(this);
 	}
 
 }

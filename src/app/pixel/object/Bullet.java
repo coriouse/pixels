@@ -4,10 +4,11 @@ import java.io.IOException;
 
 import app.pixel.graphics.Animation;
 import app.pixel.graphics.Render;
+import app.pixel.world.World;
 
 public class Bullet extends Sprite {
 
-	public int direction = 1;// -1  = left, 1 = right
+	public int direction = 1;// -1 = left, 1 = right
 
 	public float speed = 400.0f;
 
@@ -29,7 +30,7 @@ public class Bullet extends Sprite {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		Animation anim2 = new Animation();
 
 		try {
@@ -50,15 +51,27 @@ public class Bullet extends Sprite {
 		moveX += speed * direction;
 
 		posX += moveX * deltaTime;
-		
-		
-		//direction
-		if(direction > 0) {
+
+		// direction
+		if (direction > 0) {
 			currentAnimation = 0;
 		}
-		
-		if(direction < 0) {
+
+		if (direction < 0) {
 			currentAnimation = 1;
+		}
+
+		Sprite[] colliders = getColliders(posX, posY);
+
+		if (colliders.length > 0) {
+			for (Sprite sprite : colliders) {
+				if (sprite instanceof BadGuy) {
+					BadGuy badGuy = (BadGuy) sprite;
+					badGuy.takeDamage(damage);
+					World.currentWorld.removeSprite(this);
+				}
+			}
+
 		}
 
 	}
